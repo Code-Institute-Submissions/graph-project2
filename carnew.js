@@ -31,7 +31,8 @@ function makeGraph(error, carsData, manufacturerData) {
     show_quantity_sold(ndx);
     show_average_percentage_sold(ndx)
     show_total_sales_by_month(ndx) 
-    show_sales_for_nine_years(ndx);
+    show_sales_for_nine_years(ndx); 
+    show_sales_for_a_year(ndx);
     dc.renderAll();
 }
 
@@ -48,19 +49,7 @@ function show_quantity_sold(ndx) {
     var dim = ndx.dimension(dc.pluck("Make"));
     var group = dim.group().reduceSum(dc.pluck("Quantity"));
 
-    // dc.barChart("#quantity_sold")
-    //     .height(500)
-    //     .width(400)
-    //     .margins({ top: 10, right: 50, bottom: 30, left: 20 })
-    //     .dimension(dim)
-    //     .group(group)
-    //     .transitionDuration(500)
-    //     .x(d3.scale.ordinal())
-    //     .xUnits(dc.units.ordinal)
-    //     .elasticY(true)
-    //     .xAxisLabel("Make of car")
-    //     .yAxisLabel("Quantity")
-    //     .yAxis().ticks(30);
+  
     
         var chart = dc.rowChart("#quantity_sold");
 
@@ -97,26 +86,7 @@ function show_total_sales_by_month(ndx) {
         
 }   
 
-// function comparing_two_brands_(ndx) { 
-//     var dim = ndx.dimension(dc.pluck("Month"));
-//     var group = dim.group().reduceSum(dc.pluck("Quantity"));     
-//     dc.lineChart("#comparing_two_brands_")
-//         .height(500)
-//         .width(400)
-//         .margins({ top: 10, right: 50, bottom: 30, left: 20 })
-//         .dimension(dim)
-//         .group(averagePercentagebyBrand)  
-//         .transitionDuration(500)
-//         .x(d3.scale.ordinal())
-//         .xUnits(dc.units.ordinal)
-//         .elasticY(false)
-//         .xAxisLabel("Month")
-//         .yAxisLabel("Quantity")
-//         .yAxis().ticks(30)
-//         .valueAccessor(function(d) {
-//             return d.value.average;
-//         }
-// }
+
 
 function show_sales_for_nine_years(ndx) {
     var dim = ndx.dimension(dc.pluck("Year"));
@@ -168,25 +138,53 @@ function show_sales_for_nine_years(ndx) {
             .render();
     }    
 
+function show_sales_for_a_year(ndx) {
+  var dim = ndx.dimension(dc.pluck("Month"));
+  var fordSalesByYear = dim.group().reduceSum(function (d) {
+          if (d.Make === 'Volvo') {
+              return +d.Quantity;
+          } else {
+              return 0;
+          }
+      });
 
+  var pieChart = dc.pieChart('#sales_for_a_year');
+      pieChart
+  var dataset = [ 5, 10, 20, 20, 6, 25 ];
+  var w = 500;
+  var h = 500;
+  var svg = d3.select("#sales_for_a_year")
+          .append("svg")
+          .attr("width", w)
+          .attr("height", h);
+  var outerRadius = w / 2;
+  var innerRadius = w / 4;
+  var arc = d3.svg.arc()
+          .innerRadius(innerRadius)
+          .outerRadius(outerRadius);
+  var pie = d3.layout.pie();
+  var color = d3.scale.category10();
+  var arcs = svg.selectAll("g.arc")
+          .data(pie(dataset))
+          .enter()
+          .append("g")
+          .attr("class", "arc")
+          .attr("transform", "translate("+ outerRadius + ", " + outerRadius +")");
+  arcs.append("path")
+          .attr("fill", function(d, i) {
+              return color(i)
+          })
+          .attr("d", arc);
+  arcs.append("text")
+          .attr("transform", function(d) {
+              return "translate(" + arc.centroid(d) + ")";
+          })
+          .attr("text-anchor", "middle")
+          .text(function(d) {
+              return d.value;
+          });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    }             
 
 
 function show_average_percentage_sold(ndx) {
@@ -223,20 +221,5 @@ function show_average_percentage_sold(ndx) {
     var averagePercentagebyBrand = dim.group().reduce(add_item, remove_item, initialise);
 
 
-   // dc.barChart("#average_percentage_share")
-       // .height(500)
-        //.width(400)
-       // .margins({ top: 10, right: 50, bottom: 30, left: 20 })
-       // .dimension(dim)
-        //.group(averagePercentagebyBrand)
-        //.valueAccessor(function(d) {
-        //     return d.value.average;
-        // })
 
-        // .transitionDuration(500)
-        // .x(d3.scale.ordinal())
-        // .xUnits(dc.units.ordinal)
-        // .elasticY(true)
-        // .xAxisLabel("Quantity")
-        // .yAxis().ticks(18);
 }
