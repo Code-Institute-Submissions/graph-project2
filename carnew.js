@@ -156,8 +156,8 @@ function show_sales_for_a_year(ndx) {
           .externalLabels(50)
           .externalRadiusPadding(50)
           .drawPaths(true)
-          .dimension(runDimension)
-          .group(speedSumGroup)
+          .dimension(monthDimension)
+          .group(quantitySumGroup)
           .legend(dc.legend());
       chart.on('pretransition', function(chart) {
           chart.selectAll('.dc-legend-item text')
