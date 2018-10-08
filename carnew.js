@@ -140,52 +140,38 @@ function show_sales_for_nine_years(ndx) {
 
 function show_sales_for_a_year(ndx) {
   var dim = ndx.dimension(dc.pluck("Month"));
-  var fordSalesByYear = dim.group().reduceSum(function (d) {
+  var volvoSalesByYear = dim.group().reduceSum(function (d) {
           if (d.Make === 'Volvo') {
               return +d.Quantity;
           } else {
               return 0;
           }
       });
-
-  var pieChart = dc.pieChart('#sales_for_a_year');
-      pieChart
-  var dataset = [ 5, 10, 20, 20, 6, 25 ];
-  var w = 500;
-  var h = 500;
-  var svg = d3.select("#sales_for_a_year")
-          .append("svg")
-          .attr("width", w)
-          .attr("height", h);
-  var outerRadius = w / 2;
-  var innerRadius = w / 4;
-  var arc = d3.svg.arc()
-          .innerRadius(innerRadius)
-          .outerRadius(outerRadius);
-  var pie = d3.layout.pie();
-  var color = d3.scale.category10();
-  var arcs = svg.selectAll("g.arc")
-          .data(pie(dataset))
-          .enter()
-          .append("g")
-          .attr("class", "arc")
-          .attr("transform", "translate("+ outerRadius + ", " + outerRadius +")");
-  arcs.append("path")
-          .attr("fill", function(d, i) {
-              return color(i)
-          })
-          .attr("d", arc);
-  arcs.append("text")
-          .attr("transform", function(d) {
-              return "translate(" + arc.centroid(d) + ")";
-          })
-          .attr("text-anchor", "middle")
-          .text(function(d) {
-              return d.value;
-          });
-
-    }             
-
+    var pieChart = dc.pieChart('#sales_for_a_year');
+        pieChart
+          .width(768)
+          .height(480)
+          .slicesCap(4)
+          .innerRadius(100)
+          .externalLabels(50)
+          .externalRadiusPadding(50)
+          .drawPaths(true)
+          .dimension(runDimension)
+          .group(speedSumGroup)
+          .legend(dc.legend());
+      chart.on('pretransition', function(chart) {
+          chart.selectAll('.dc-legend-item text')
+              .text('')
+            .append('tspan')
+              .text(function(d) { return d.month; })
+            .append('tspan')
+              .attr('x', 100)
+              .attr('text-anchor', 'end')
+              .text(function(d) { return d.quantity; });
+      });
+      chart.render();
+  
+}
 
 function show_average_percentage_sold(ndx) {
     var dim = ndx.dimension(dc.pluck("Pct"));
