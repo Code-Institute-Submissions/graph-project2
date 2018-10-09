@@ -146,21 +146,27 @@ function show_sales_for_a_year(ndx) {
           } else {
               return 0;
           }
-      });
+      }); 
+    var monthsNames= d3.scale.ordinal()
+            .domain([  "Jan", "Feb", "Mar", "Apr",
+    "May", "Jun", "Jul", "Aug", 
+    "Sep", "Oct", "Nov", "Dec"]); 
+    
     var pieChart = dc.pieChart('#sales_for_a_year');
         pieChart
-          .width(768)
-          .height(480)
-          .slicesCap(4)
-          .innerRadius(100)
-          .externalLabels(50)
-          .externalRadiusPadding(50)
+          .width(568)
+          .height(380) 
+          .x(d3.scale.ordinal().domain(monthNames))
+          .slicesCap(11)
+          .innerRadius(80)
+          .externalLabels(30)
+          .externalRadiusPadding(30)
           .drawPaths(true)
           .dimension(dim)
           .group(volvoSalesByYear)
-          .legend(dc.legend());
-      chart.on('pretransition', function(chart) {
-          chart.selectAll('.dc-legend-item text')
+          .legend(dc.legend()); 
+       pieChart.on('pretransition', function(piechart) {
+          piechart.selectAll('.dc-legend-item text')
               .text('')
             .append('tspan')
               .text(function(d) { return d.month; })
@@ -168,8 +174,8 @@ function show_sales_for_a_year(ndx) {
               .attr('x', 100)
               .attr('text-anchor', 'end')
               .text(function(d) { return d.quantity; });
-      });
-      chart.render();
+      }); 
+        
   
 }
 
