@@ -43,5 +43,5 @@ Credits
 Content
 All content in taken from different statistics websites.
 
-Acknowledgments
-For the reviews, I followed the tutorials in the lms however, the graphs was significantly modified to fit my project.
+Acknowledgments 
+I followed the tutorials in the lms however, the graphs was significantly modified to fit my project.
