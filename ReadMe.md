@@ -10,7 +10,7 @@ From the Lms videos was used to build this charts(graphs). There were some speci
 For the home page I have used the parallax effect with images and some information about the car market in Norway.
 For the the brand market i have used a table. 
 And for statitstics there are the dc harts. 
-The navbar is responsive (colapsable)and stays on top with a logo inside. 
+The navbar is responsive (colapsable)and stays on top with a logo inside and stays with the same background color with the same logo in all of the pages.
 Every page have got a different background image and all of them are responsive to a diferrent screen sizes.  
 For two of the pages I have used opacty the text to be more readable. 
 
