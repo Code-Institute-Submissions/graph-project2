@@ -31,8 +31,8 @@ function makeGraph(error, carsData, manufacturerData) {
     show_quantity_sold(ndx);
     show_average_percentage_sold(ndx)
     show_total_sales_by_month(ndx) 
-    show_sales_for_nine_years(ndx); 
-    show_sales_for_a_year(ndx);
+    show_sales_for_eleven_years(ndx); 
+    show_sales_for_ten_years(ndx);
     dc.renderAll();
 }
 
@@ -88,7 +88,7 @@ function show_total_sales_by_month(ndx) {
 
 
 
-function show_sales_for_nine_years(ndx) {
+function show_sales_for_eleven_years(ndx) {
     var dim = ndx.dimension(dc.pluck("Year"));
     
     var fordSalesByYear = dim.group().reduceSum(function (d) {
@@ -114,7 +114,7 @@ function show_sales_for_nine_years(ndx) {
                 return 0;
             }
         });
-    var compositeChart = dc.compositeChart('#sales_for_nine_years');
+    var compositeChart = dc.compositeChart('#sales_for_eleven_years');
         compositeChart
             .width(990)
             .height(200)
@@ -138,45 +138,55 @@ function show_sales_for_nine_years(ndx) {
             .render();
     }    
 
-function show_sales_for_a_year(ndx) {
-  var dim = ndx.dimension(dc.pluck("Month"));
+function show_sales_for_ten_years(ndx) {
+  var dim = ndx.dimension(dc.pluck("Year"));
   var volvoSalesByYear = dim.group().reduceSum(function (d) {
           if (d.Make === 'Volvo') {
               return +d.Quantity;
           } else {
               return 0;
           }
-      }); 
-    var monthsNames= d3.scale.ordinal()
-            .domain([  "Jan", "Feb", "Mar", "Apr",
-    "May", "Jun", "Jul", "Aug", 
-    "Sep", "Oct", "Nov", "Dec"]); 
-    
-    var pieChart = dc.pieChart('#sales_for_a_year');
-        pieChart
-          .width(568)
-          .height(380) 
-          .x(d3.scale.ordinal().domain(monthNames))
-          .slicesCap(11)
-          .innerRadius(80)
-          .externalLabels(30)
-          .externalRadiusPadding(30)
-          .drawPaths(true)
-          .dimension(dim)
-          .group(volvoSalesByYear)
-          .legend(dc.legend()); 
-       pieChart.on('pretransition', function(piechart) {
-          piechart.selectAll('.dc-legend-item text')
-              .text('')
-            .append('tspan')
-              .text(function(d) { return d.month; })
-            .append('tspan')
-              .attr('x', 100)
-              .attr('text-anchor', 'end')
-              .text(function(d) { return d.quantity; });
-      }); 
+      });  
+     
+     var audiSalesByYear = dim.group().reduceSum(function (d) {
+            if (d.Make === 'Audi') {
+                return +d.Quantity;
+            } else {
+                return 0;
+            }
+        });  
         
-  
+        
+      var skodaSalesByYear = dim.group().reduceSum(function (d) {
+            if (d.Make === 'Skoda') {
+                return +d.Quantity;
+            } else {
+                return 0;
+            }
+        });    
+     var compositeChart = dc.compositeChart('#sales_for_ten_years');
+        compositeChart
+            .width(990)
+            .height(200)
+            .dimension(dim)
+            .x(d3.time.scale().domain([2007, 2016]))
+            .yAxisLabel("The Y Axis")
+            .legend(dc.legend().x(80).y(20).itemHeight(13).gap(5))
+            .renderHorizontalGridLines(true)
+            .compose([
+                dc.lineChart(compositeChart)
+                    .colors('green')
+                    .group(volvoSalesByYear, 'Volvo'),
+                dc.lineChart(compositeChart)
+                    .colors('red')
+                    .group(audiSalesByYear, 'Audi'),
+                dc.lineChart(compositeChart)
+                    .colors('blue')
+                    .group(skodaSalesByYear, 'Skoda')
+            ])
+            .brushOn(false)
+            .render();
+ 
 }
 
 function show_average_percentage_sold(ndx) {
