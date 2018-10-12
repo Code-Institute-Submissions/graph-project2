@@ -3,7 +3,7 @@ Car website - Stream 2 Project
 
 This is a website focused on car market in norway in the last ten years (2007-2017). 
 
-User Experience
+User Experience:
 This website is intended for users  to gain information about the car market in norway and see the comparison and the  market share and tje quantity sold of each brand in different time during the ten year period.
 By seeing the different charts they can see the comparison which brand is a best seller for a particular time period. 
 From the Lms videos was used to build this charts. There were some specific UX designs that were taken into consideration when styling this site. The navbar was on the top off the desktop view to present a cleaner, more minimalistic approach to the design,and every page has a background photo.
@@ -30,16 +30,18 @@ Manual testing was done for all of the links and buttons in the  in website. Thi
 Functionality:
 Needs to have a responsive design forusing on mobile first design. This has been accomplished using Bootstrap.
 
-Features  
+Features:
 One more csv file was created for the filter because car bands were to many and know  they are devided by the county they are made and now the graphs are working with both of them.
 The navbar is responsive and stays on top using a high index value.  
 For one of the graphs(total sales by mont for one year) i have added  domain for the x ordinal of the graph.Just the data in the chart to be more readable and understandable
 
+Features left to implement: 
+One or two more charts could be added for more information about the car market in Norway for the users.
 
 Deployment method: Github Pages:
 https://github.com/DimitarDDD/graph-project2 
 
-Credits 
+Credits:
 Content
 All content in taken from different statistics websites.
 
