@@ -9,8 +9,8 @@ By seeing the different charts they can see the comparison which brand is a best
 From the Lms videos was used to build this charts. There were some specific UX designs that were taken into consideration when styling this site. The navbar was on the top off the desktop view to present a cleaner, more minimalistic approach to the design,and every page has a background photo.
 For the home page I have used the parallax effect with images and some information about the car market in Norway.
 For the the brand market i have used a chart. 
-And for statitstics there are the dc and d3 charts. 
-The navbar is responsive (colapsable)and stays on top with a log inside. 
+And for statitstics there are the dc and charts. 
+The navbar is responsive (colapsable)and stays on top with a logo inside. 
 Every page have got a different background image and all of them are responsive to a diferrent screen sizes.  
 For two of the pages I have used opacty the text to be more readable. 
 
